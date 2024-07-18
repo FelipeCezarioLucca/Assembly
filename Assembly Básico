@@ -1,0 +1,15 @@
+RANDGEN:         ; Gera um número aleatório usando o horário do sistema
+RANDSTART:
+   MOV AH, 00h  ; Carrega o valor 00h no registrador AH para obter o horário do sistema
+   INT 1AH      ; Chama a interrupção 1AH para obter o número de "ticks" do relógio desde a meia-noite
+
+   mov  ax, dx  ; Move o valor de DX para AX
+   xor  dx, dx  ; Limpa o registrador DX
+   mov  cx, 10  ; Move o valor 10 para CX (divisor)
+   div  cx       ; Divide AX por CX, armazenando o resultado em DX (resto da divisão)
+   
+   add  dl, '0'  ; Converte o valor em DX para o formato ASCII ('0' a '9')
+   mov ah, 2h   ; Carrega o valor 2h no registrador AH (função para exibir um caractere)
+   int 21h      ; Chama a interrupção 21h para exibir o caractere
+   
+RET            ; Retorna da rotina
